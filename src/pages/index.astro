@@ -1,11 +1,313 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Plant Monitoring</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body>
+		<main>
+			<div class="card">
+				<div class="image-container">
+					<img src="/plant.png" alt="Monstera Deliciosa" />
+				</div>
+				<div class="info">
+					<h1>Monstera Deliciosa</h1>
+					<div class="stats">
+						<div class="stat-item">
+							<span class="label">Temperature</span>
+							<span class="value" id="temp-value">--°C</span>
+						</div>
+						<div class="divider"></div>
+						<div class="stat-item">
+							<span class="label">Humidity</span>
+							<span class="value" id="humidity-value">--%</span>
+						</div>
+					</div>
+					<div class="chart-container">
+						<canvas id="readingsChart"></canvas>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<script is:inline src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script is:inline>
+			console.log("Inline script started");
+
+			let chartInstance = null;
+
+			async function fetchData() {
+				try {
+					const response = await fetch("/api/readings");
+					if (!response.ok) throw new Error("Failed to fetch data");
+
+					const data = await response.json();
+					if (data.length === 0) return;
+
+					// Get latest reading for display
+					const latest = data[data.length - 1];
+
+					const tempElement = document.getElementById("temp-value");
+					const humidityElement =
+						document.getElementById("humidity-value");
+
+					if (tempElement)
+						tempElement.textContent = `${latest.temperature.toFixed(1)}°C`;
+					if (humidityElement)
+						humidityElement.textContent = `${latest.humidity.toFixed(0)}%`;
+
+					updateChart(data);
+				} catch (err) {
+					console.error("Error fetching data:", err);
+				}
+			}
+
+			function updateChart(data) {
+				const canvas = document.getElementById("readingsChart");
+				if (!canvas) return;
+
+				// Format labels (time)
+				const labels = data.map((d) => {
+					const date = new Date(d.time);
+					return date.toLocaleTimeString([], {
+						hour: "2-digit",
+						minute: "2-digit",
+					});
+				});
+
+				const temps = data.map((d) => d.temperature);
+				const humidities = data.map((d) => d.humidity);
+
+				if (chartInstance) {
+					chartInstance.data.labels = labels;
+					chartInstance.data.datasets[0].data = temps;
+					chartInstance.data.datasets[1].data = humidities;
+					chartInstance.update();
+				} else {
+					console.log("Creating new chart instance");
+					chartInstance = new Chart(canvas, {
+						type: "line",
+						data: {
+							labels: labels,
+							datasets: [
+								{
+									label: "Temperature (°C)",
+									data: temps,
+									borderColor: "#00b894",
+									backgroundColor: "rgba(0, 184, 148, 0.2)",
+									tension: 0.4,
+									fill: true,
+									pointRadius: 0,
+									pointHoverRadius: 4,
+								},
+								{
+									label: "Humidity (%)",
+									data: humidities,
+									borderColor: "#0984e3",
+									backgroundColor: "rgba(9, 132, 227, 0.2)",
+									tension: 0.4,
+									fill: true,
+									pointRadius: 0,
+									pointHoverRadius: 4,
+								},
+							],
+						},
+						options: {
+							responsive: true,
+							maintainAspectRatio: false,
+							plugins: {
+								legend: {
+									position: "bottom",
+									labels: {
+										usePointStyle: true,
+										font: {
+											family: "'Outfit', sans-serif",
+											size: 11,
+										},
+									},
+								},
+								tooltip: {
+									mode: "index",
+									intersect: false,
+								},
+							},
+							scales: {
+								x: {
+									grid: {
+										display: false,
+									},
+									ticks: {
+										maxTicksLimit: 5,
+										font: {
+											size: 10,
+										},
+									},
+								},
+								y: {
+									grid: {
+										color: "#f1f2f6",
+									},
+									ticks: {
+										font: {
+											size: 10,
+										},
+									},
+								},
+							},
+							interaction: {
+								mode: "nearest",
+								axis: "x",
+								intersect: false,
+							},
+						},
+					});
+				}
+			}
+
+			// Initial call
+			fetchData();
+
+			// Poll every 15 seconds
+			setInterval(fetchData, 15000);
+		</script>
+
+		<style>
+			:root {
+				--bg-color: #f5f7fa;
+				--card-bg: #ffffff;
+				--text-primary: #2d3436;
+				--text-secondary: #636e72;
+				--accent-color: #00b894;
+				--shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+			}
+
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				font-family: "Outfit", sans-serif;
+				background-color: var(--bg-color);
+				color: var(--text-primary);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				min-height: 100vh;
+			}
+
+			main {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				padding: 20px;
+			}
+
+			.card {
+				background: var(--card-bg);
+				border-radius: 24px;
+				box-shadow: var(--shadow);
+				padding: 40px;
+				width: 100%;
+				max-width: 500px; /* Increased width for chart */
+				text-align: center;
+				transition: transform 0.3s ease;
+			}
+
+			.card:hover {
+				transform: translateY(-5px);
+			}
+
+			.image-container {
+				width: 150px; /* Slightly smaller to fit chart */
+				height: 150px;
+				margin: 0 auto 20px;
+				border-radius: 50%;
+				overflow: hidden;
+				background: #eef2f5;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.image-container img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+			h1 {
+				font-weight: 600;
+				font-size: 1.5rem;
+				margin-bottom: 20px;
+				color: var(--text-primary);
+				letter-spacing: -0.5px;
+			}
+
+			.stats {
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+				background: #f8f9fa;
+				padding: 15px;
+				border-radius: 16px;
+				margin-bottom: 25px;
+			}
+
+			.stat-item {
+				display: flex;
+				flex-direction: column;
+				gap: 5px;
+			}
+
+			.label {
+				font-size: 0.75rem;
+				color: var(--text-secondary);
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				font-weight: 400;
+			}
+
+			.value {
+				font-size: 1.25rem;
+				font-weight: 600;
+				color: var(--text-primary);
+			}
+
+			.divider {
+				width: 1px;
+				height: 30px;
+				background-color: #dfe6e9;
+			}
+
+			.chart-container {
+				position: relative;
+				height: 200px;
+				width: 100%;
+			}
+
+			@media (max-width: 480px) {
+				.card {
+					padding: 30px 20px;
+				}
+
+				h1 {
+					font-size: 1.3rem;
+				}
+			}
+		</style>
+	</body>
+</html>
