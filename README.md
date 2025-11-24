@@ -1,46 +1,48 @@
-# Astro Starter Kit: Basics
+# 🌿 Plant Monitoring Dashboard
 
-```sh
-npm create astro@latest -- --template basics
-```
+Un dashboard en tiempo real para monitorizar las condiciones ambientales de tus plantas. Este proyecto visualiza datos de temperatura y humedad, ayudándote a mantener tus plantas felices y saludables.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+![Plant Monitoring Dashboard](/plant.png)
 
-## 🚀 Project Structure
+## ✨ Características
 
-Inside of your Astro project, you'll see the following folders and files:
+- **Monitorización en Tiempo Real**: Visualización instantánea de la temperatura y humedad actuales.
+- **Gráficos Históricos**: Gráfico interactivo (Chart.js) que muestra la evolución de las lecturas a lo largo del tiempo.
+- **Actualización Automática**: Los datos se refrescan automáticamente cada 15 segundos sin necesidad de recargar la página.
+- **Diseño Responsivo**: Interfaz limpia y moderna adaptada a dispositivos móviles y de escritorio.
+- **Indicadores Visuales**: Diseño intuitivo con tarjetas y estadísticas claras.
+
+## 🛠️ Tecnologías
+
+Este proyecto está construido con:
+
+- **[Astro](https://astro.build/)**: Framework web para construir sitios rápidos y optimizados.
+- **[Chart.js](https://www.chartjs.org/)**: Librería para la visualización de datos en gráficos.
+- **HTML5 & CSS3**: Estilizado moderno con variables CSS y diseño flexbox.
+- **JavaScript (ES6+)**: Lógica del cliente para la obtención de datos y renderizado de gráficos.
+
+## 🚀 Comandos
+
+Todos los comandos se ejecutan desde la raíz del proyecto en tu terminal:
+
+| Comando                   | Acción                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Instala las dependencias                         |
+| `npm run dev`             | Inicia el servidor de desarrollo en `localhost:4321` |
+| `npm run build`           | Construye el sitio para producción en `./dist/`  |
+| `npm run preview`         | Previsualiza tu build localmente                 |
+| `npm run astro ...`       | Ejecuta comandos CLI como `astro add`, `astro check` |
+
+## 📂 Estructura del Proyecto
 
 ```text
 /
 ├── public/
-│   └── favicon.svg
+│   └── plant.png        # Imágenes estáticas
 ├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
+│   ├── pages
+│   │   ├── api          # Endpoints de API simulados
+│   │   └── index.astro  # Página principal del dashboard
+│   └── ...
 └── package.json
 ```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
