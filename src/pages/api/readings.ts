@@ -7,7 +7,7 @@ export const GET: APIRoute = async () => {
     // Fetch last 50 results to populate the graph
     const url = "https://api.thingspeak.com/channels/3176708/feeds.json?results=50";
     const response = await fetch(url);
-    
+
     if (!response.ok) {
       return new Response(JSON.stringify({ error: 'Failed to fetch data from ThingSpeak' }), {
         status: 502,
@@ -16,12 +16,13 @@ export const GET: APIRoute = async () => {
     }
 
     const data = await response.json();
-    
+
     // Transform data for the frontend
     const readings = data.feeds.map((feed: any) => ({
       time: feed.created_at,
       temperature: parseFloat(feed.field1),
-      humidity: parseFloat(feed.field2)
+      humidity: parseFloat(feed.field2),
+      lightIntensity: parseFloat(feed.field3)
     }));
 
     return new Response(JSON.stringify(readings), {
