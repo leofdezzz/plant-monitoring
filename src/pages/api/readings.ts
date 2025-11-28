@@ -4,8 +4,8 @@ import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = async () => {
   try {
-    // Fetch last 50 results to populate the graph
-    const url = "https://api.thingspeak.com/channels/3176708/feeds.json?results=50";
+    // Fetch last 1000 results to populate the graph
+    const url = "https://api.thingspeak.com/channels/3176708/feeds.json?results=1000";
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -22,7 +22,8 @@ export const GET: APIRoute = async () => {
       time: feed.created_at,
       temperature: parseFloat(feed.field1),
       humidity: parseFloat(feed.field2),
-      lightIntensity: parseFloat(feed.field3)
+      lightIntensity: parseFloat(feed.field3),
+      airHumidity: parseFloat(feed.field4)
     }));
 
     return new Response(JSON.stringify(readings), {

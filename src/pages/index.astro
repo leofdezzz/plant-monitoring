@@ -8,40 +8,219 @@
 		<link rel="icon" type="image/png" href="/favicon.png" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Plant Monitoring</title>
+		<title>Monitoreo de Plantas</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap"
 			rel="stylesheet"
 		/>
 	</head>
 	<body>
 		<main>
-			<div class="card">
+			<header class="plant-header fade-in">
 				<div class="image-container">
 					<img src="/plant.png" alt="Epipremnum Aureum" />
 				</div>
-				<div class="info">
+				<div class="header-info">
 					<h1>Epipremnum Aureum</h1>
-					<div class="stats">
-						<div class="stat-item">
-							<span class="label">Temperatura</span>
-							<span class="value" id="temp-value">--°C</span>
+					<p class="subtitle">Monitor en tiempo real</p>
+				</div>
+				<button
+					id="view-toggle"
+					class="view-toggle"
+					aria-label="Toggle View"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						><rect x="3" y="3" width="7" height="7"></rect><rect
+							x="14"
+							y="3"
+							width="7"
+							height="7"></rect><rect
+							x="14"
+							y="14"
+							width="7"
+							height="7"></rect><rect
+							x="3"
+							y="14"
+							width="7"
+							height="7"></rect></svg
+					>
+				</button>
+			</header>
+
+			<div id="grid-view" class="dashboard-grid">
+				<!-- Temperature Card -->
+				<div class="metric-card fade-in delay-1">
+					<div class="metric-header">
+						<div class="metric-info">
+							<span class="metric-label">Temperatura</span>
+							<span class="metric-value" id="temp-value"
+								>--°C</span
+							>
 						</div>
-						<div class="divider"></div>
-						<div class="stat-item">
-							<span class="label">Humedad</span>
-							<span class="value" id="humidity-value">--%</span>
-						</div>
-						<div class="divider"></div>
-						<div class="stat-item">
-							<span class="label">Luz</span>
-							<span class="value" id="light-value">--%</span>
+						<div class="metric-icon temp-icon">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								><path
+									d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"
+								></path></svg
+							>
 						</div>
 					</div>
 					<div class="chart-container">
-						<canvas id="readingsChart"></canvas>
+						<canvas id="tempChart"></canvas>
+					</div>
+				</div>
+
+				<!-- Humidity Card -->
+				<div class="metric-card fade-in delay-2">
+					<div class="metric-header">
+						<div class="metric-info">
+							<span class="metric-label">Humedad</span>
+							<span class="metric-value" id="humidity-value"
+								>--%</span
+							>
+						</div>
+						<div class="metric-icon humidity-icon">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"
+								></path></svg
+							>
+						</div>
+					</div>
+					<div class="chart-container">
+						<canvas id="humidityChart"></canvas>
+					</div>
+				</div>
+
+				<!-- Light Card -->
+				<div class="metric-card fade-in delay-3">
+					<div class="metric-header">
+						<div class="metric-info">
+							<span class="metric-label">Intensidad de Luz</span>
+							<span class="metric-value" id="light-value"
+								>--%</span
+							>
+						</div>
+						<div class="metric-icon light-icon">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								><circle cx="12" cy="12" r="5"></circle><line
+									x1="12"
+									y1="1"
+									x2="12"
+									y2="3"></line><line
+									x1="12"
+									y1="21"
+									x2="12"
+									y2="23"></line><line
+									x1="4.22"
+									y1="4.22"
+									x2="5.64"
+									y2="5.64"></line><line
+									x1="18.36"
+									y1="18.36"
+									x2="19.78"
+									y2="19.78"></line><line
+									x1="1"
+									y1="12"
+									x2="3"
+									y2="12"></line><line
+									x1="21"
+									y1="12"
+									x2="23"
+									y2="12"></line><line
+									x1="4.22"
+									y1="19.78"
+									x2="5.64"
+									y2="18.36"></line><line
+									x1="18.36"
+									y1="5.64"
+									x2="19.78"
+									y2="4.22"></line></svg
+							>
+						</div>
+					</div>
+					<div class="chart-container">
+						<canvas id="lightChart"></canvas>
+					</div>
+				</div>
+
+				<!-- Air Humidity Card -->
+				<div class="metric-card fade-in delay-4">
+					<div class="metric-header">
+						<div class="metric-info">
+							<span class="metric-label">Humedad del Aire</span>
+							<span class="metric-value" id="air-humidity-value"
+								>--%</span
+							>
+						</div>
+						<div class="metric-icon air-humidity-icon">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"
+								></path></svg
+							>
+						</div>
+					</div>
+					<div class="chart-container">
+						<canvas id="airHumidityChart"></canvas>
+					</div>
+				</div>
+			</div>
+
+			<div id="combined-view" class="combined-view hidden fade-in">
+				<div class="metric-card full-width">
+					<div class="metric-header">
+						<div class="metric-info">
+							<span class="metric-label">Vista Combinada</span>
+						</div>
+					</div>
+					<div class="chart-container">
+						<canvas id="combinedChart"></canvas>
 					</div>
 				</div>
 			</div>
@@ -49,9 +228,283 @@
 
 		<script is:inline src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<script is:inline>
-			console.log("Inline script started");
+			// Chart instances
+			let tempChart = null;
+			let humidityChart = null;
+			let lightChart = null;
+			let airHumidityChart = null;
+			let combinedChart = null;
 
-			let chartInstance = null;
+			// Common Chart Options for Minimalism
+			const commonOptions = {
+				responsive: true,
+				maintainAspectRatio: false,
+				plugins: {
+					legend: { display: false },
+					tooltip: {
+						mode: "index",
+						intersect: false,
+						backgroundColor: "rgba(255, 255, 255, 0.9)",
+						titleColor: "#2d3436",
+						bodyColor: "#2d3436",
+						borderColor: "#dfe6e9",
+						borderWidth: 1,
+						padding: 10,
+						displayColors: false,
+						callbacks: {
+							label: function (context) {
+								return (
+									context.parsed.y +
+									(context.dataset.unit || "")
+								);
+							},
+						},
+					},
+				},
+				scales: {
+					x: {
+						display: false, // Hide x-axis labels for cleaner look
+						grid: { display: false },
+					},
+					y: {
+						display: true,
+						position: "right",
+						grid: {
+							color: "#f1f2f6",
+							borderDash: [5, 5],
+						},
+						ticks: {
+							font: { size: 10, family: "'Outfit', sans-serif" },
+							color: "#b2bec3",
+							maxTicksLimit: 5,
+						},
+						border: { display: false },
+					},
+				},
+				interaction: {
+					mode: "nearest",
+					axis: "x",
+					intersect: false,
+				},
+				elements: {
+					point: {
+						radius: 0, // Hide points by default
+						hitRadius: 10,
+						hoverRadius: 4,
+					},
+					line: {
+						tension: 0.4, // Smooth curves
+						borderWidth: 2,
+					},
+				},
+				animation: {
+					duration: 1000,
+					easing: "easeOutQuart",
+				},
+			};
+
+			function createGradient(ctx, colorStart, colorEnd) {
+				const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+				gradient.addColorStop(0, colorStart);
+				gradient.addColorStop(1, colorEnd);
+				return gradient;
+			}
+
+			function initCharts() {
+				// Temperature Chart
+				const tempCtx = document
+					.getElementById("tempChart")
+					.getContext("2d");
+				const tempGradient = createGradient(
+					tempCtx,
+					"rgba(0, 184, 148, 0.2)",
+					"rgba(0, 184, 148, 0.0)",
+				);
+
+				tempChart = new Chart(tempCtx, {
+					type: "line",
+					data: {
+						labels: [],
+						datasets: [
+							{
+								label: "Temperatura",
+								data: [],
+								borderColor: "#00b894",
+								backgroundColor: tempGradient,
+								fill: true,
+								unit: "°C",
+							},
+						],
+					},
+					options: commonOptions,
+				});
+
+				// Humidity Chart
+				const humidityCtx = document
+					.getElementById("humidityChart")
+					.getContext("2d");
+				const humidityGradient = createGradient(
+					humidityCtx,
+					"rgba(9, 132, 227, 0.2)",
+					"rgba(9, 132, 227, 0.0)",
+				);
+
+				humidityChart = new Chart(humidityCtx, {
+					type: "line",
+					data: {
+						labels: [],
+						datasets: [
+							{
+								label: "Humedad",
+								data: [],
+								borderColor: "#0984e3",
+								backgroundColor: humidityGradient,
+								fill: true,
+								unit: "%",
+							},
+						],
+					},
+					options: commonOptions,
+				});
+
+				// Light Chart
+				const lightCtx = document
+					.getElementById("lightChart")
+					.getContext("2d");
+				const lightGradient = createGradient(
+					lightCtx,
+					"rgba(253, 203, 110, 0.2)",
+					"rgba(253, 203, 110, 0.0)",
+				);
+
+				lightChart = new Chart(lightCtx, {
+					type: "line",
+					data: {
+						labels: [],
+						datasets: [
+							{
+								label: "Luz",
+								data: [],
+								borderColor: "#fdcb6e",
+								backgroundColor: lightGradient,
+								fill: true,
+								unit: "%",
+							},
+						],
+					},
+					options: commonOptions,
+				});
+
+				// Air Humidity Chart
+				const airHumidityCtx = document
+					.getElementById("airHumidityChart")
+					.getContext("2d");
+				const airHumidityGradient = createGradient(
+					airHumidityCtx,
+					"rgba(108, 92, 231, 0.2)",
+					"rgba(108, 92, 231, 0.0)",
+				);
+
+				airHumidityChart = new Chart(airHumidityCtx, {
+					type: "line",
+					data: {
+						labels: [],
+						datasets: [
+							{
+								label: "Humedad del Aire",
+								data: [],
+								borderColor: "#6c5ce7",
+								backgroundColor: airHumidityGradient,
+								fill: true,
+								unit: "%",
+							},
+						],
+					},
+					options: commonOptions,
+				});
+
+				// Combined Chart
+				const combinedCtx = document
+					.getElementById("combinedChart")
+					.getContext("2d");
+
+				combinedChart = new Chart(combinedCtx, {
+					type: "line",
+					data: {
+						labels: [],
+						datasets: [
+							{
+								label: "Temperatura",
+								data: [],
+								borderColor: "#00b894",
+								backgroundColor: "transparent",
+								borderWidth: 2,
+								tension: 0.4,
+								pointRadius: 0,
+								yAxisID: "y",
+							},
+							{
+								label: "Humedad",
+								data: [],
+								borderColor: "#0984e3",
+								backgroundColor: "transparent",
+								borderWidth: 2,
+								tension: 0.4,
+								pointRadius: 0,
+								yAxisID: "y",
+							},
+							{
+								label: "Luz",
+								data: [],
+								borderColor: "#fdcb6e",
+								backgroundColor: "transparent",
+								borderWidth: 2,
+								tension: 0.4,
+								pointRadius: 0,
+								yAxisID: "y",
+							},
+							{
+								label: "Humedad del Aire",
+								data: [],
+								borderColor: "#6c5ce7",
+								backgroundColor: "transparent",
+								borderWidth: 2,
+								tension: 0.4,
+								pointRadius: 0,
+								yAxisID: "y",
+							},
+						],
+					},
+					options: {
+						...commonOptions,
+						plugins: {
+							...commonOptions.plugins,
+							legend: {
+								display: true,
+								position: "top",
+								align: "end",
+								labels: {
+									usePointStyle: true,
+									boxWidth: 8,
+									font: {
+										family: "'Outfit', sans-serif",
+										size: 11,
+									},
+								},
+							},
+						},
+						scales: {
+							x: { display: false },
+							y: {
+								display: true,
+								position: "right",
+								grid: { color: "#f1f2f6", borderDash: [5, 5] },
+								border: { display: false },
+							},
+						},
+					},
+				});
+			}
 
 			async function fetchData() {
 				try {
@@ -61,147 +514,89 @@
 					const data = await response.json();
 					if (data.length === 0) return;
 
-					// Get latest reading for display
+					// Update Current Values
 					const latest = data[data.length - 1];
+					document.getElementById("temp-value").textContent =
+						`${latest.temperature.toFixed(1)}°C`;
+					document.getElementById("humidity-value").textContent =
+						`${latest.humidity.toFixed(0)}%`;
+					document.getElementById("light-value").textContent =
+						`${latest.lightIntensity.toFixed(0)}%`;
+					document.getElementById("air-humidity-value").textContent =
+						`${latest.airHumidity.toFixed(0)}%`;
 
-					const tempElement = document.getElementById("temp-value");
-					const humidityElement =
-						document.getElementById("humidity-value");
+					// Prepare Data for Charts
+					const labels = data.map((d) =>
+						new Date(d.time).toLocaleTimeString([], {
+							hour: "2-digit",
+							minute: "2-digit",
+						}),
+					);
+					const temps = data.map((d) => d.temperature);
+					const humidities = data.map((d) => d.humidity);
+					const lights = data.map((d) => d.lightIntensity);
+					const airHumidities = data.map((d) => d.airHumidity);
 
-					if (tempElement)
-						tempElement.textContent = `${latest.temperature.toFixed(1)}°C`;
-					if (humidityElement)
-						humidityElement.textContent = `${latest.humidity.toFixed(0)}%`;
-
-					const lightElement = document.getElementById("light-value");
-					if (lightElement)
-						lightElement.textContent = `${latest.lightIntensity.toFixed(0)}%`;
-
-					updateChart(data);
+					// Update Charts
+					if (tempChart) {
+						tempChart.data.labels = labels;
+						tempChart.data.datasets[0].data = temps;
+						tempChart.update("none"); // 'none' mode for performance if frequent updates, or remove for animation
+					}
+					if (humidityChart) {
+						humidityChart.data.labels = labels;
+						humidityChart.data.datasets[0].data = humidities;
+						humidityChart.update("none");
+					}
+					if (lightChart) {
+						lightChart.data.labels = labels;
+						lightChart.data.datasets[0].data = lights;
+						lightChart.update("none");
+					}
+					if (airHumidityChart) {
+						airHumidityChart.data.labels = labels;
+						airHumidityChart.data.datasets[0].data = airHumidities;
+						airHumidityChart.update("none");
+					}
+					if (combinedChart) {
+						combinedChart.data.labels = labels;
+						combinedChart.data.datasets[0].data = temps;
+						combinedChart.data.datasets[1].data = humidities;
+						combinedChart.data.datasets[2].data = lights;
+						combinedChart.data.datasets[3].data = airHumidities;
+						combinedChart.update("none");
+					}
 				} catch (err) {
 					console.error("Error fetching data:", err);
 				}
 			}
-
-			function updateChart(data) {
-				const canvas = document.getElementById("readingsChart");
-				if (!canvas) return;
-
-				// Format labels (time)
-				const labels = data.map((d) => {
-					const date = new Date(d.time);
-					return date.toLocaleTimeString([], {
-						hour: "2-digit",
-						minute: "2-digit",
-					});
-				});
-
-				const temps = data.map((d) => d.temperature);
-				const humidities = data.map((d) => d.humidity);
-				const lights = data.map((d) => d.lightIntensity);
-
-				if (chartInstance) {
-					chartInstance.data.labels = labels;
-					chartInstance.data.datasets[0].data = temps;
-					chartInstance.data.datasets[1].data = humidities;
-					chartInstance.data.datasets[2].data = lights;
-					chartInstance.update();
-				} else {
-					console.log("Creating new chart instance");
-					chartInstance = new Chart(canvas, {
-						type: "line",
-						data: {
-							labels: labels,
-							datasets: [
-								{
-									label: "Temperatura (°C)",
-									data: temps,
-									borderColor: "#00b894",
-									backgroundColor: "rgba(0, 184, 148, 0.2)",
-									tension: 0.4,
-									fill: true,
-									pointRadius: 0,
-									pointHoverRadius: 4,
-								},
-								{
-									label: "Humedad (%)",
-									data: humidities,
-									borderColor: "#0984e3",
-									backgroundColor: "rgba(9, 132, 227, 0.2)",
-									tension: 0.4,
-									fill: true,
-									pointRadius: 0,
-									pointHoverRadius: 4,
-								},
-								{
-									label: "Luz (%)",
-									data: lights,
-									borderColor: "#fdcb6e",
-									backgroundColor: "rgba(253, 203, 110, 0.2)",
-									tension: 0.4,
-									fill: true,
-									pointRadius: 0,
-									pointHoverRadius: 4,
-								},
-							],
-						},
-						options: {
-							responsive: true,
-							maintainAspectRatio: false,
-							plugins: {
-								legend: {
-									position: "bottom",
-									labels: {
-										usePointStyle: true,
-										font: {
-											family: "'Outfit', sans-serif",
-											size: 11,
-										},
-									},
-								},
-								tooltip: {
-									mode: "index",
-									intersect: false,
-								},
-							},
-							scales: {
-								x: {
-									grid: {
-										display: false,
-									},
-									ticks: {
-										maxTicksLimit: 5,
-										font: {
-											size: 10,
-										},
-									},
-								},
-								y: {
-									grid: {
-										color: "#f1f2f6",
-									},
-									ticks: {
-										font: {
-											size: 10,
-										},
-									},
-								},
-							},
-							interaction: {
-								mode: "nearest",
-								axis: "x",
-								intersect: false,
-							},
-						},
-					});
-				}
-			}
-
-			// Initial call
+			initCharts();
 			fetchData();
+			setInterval(fetchData, 5000); // Update every 5 seconds
 
-			// Poll every 15 seconds
-			setInterval(fetchData, 15000);
+			// View Toggle Logic
+			const toggleBtn = document.getElementById("view-toggle");
+			const gridView = document.getElementById("grid-view");
+			const combinedView = document.getElementById("combined-view");
+			let isGridView = true;
+
+			toggleBtn.addEventListener("click", () => {
+				isGridView = !isGridView;
+
+				if (isGridView) {
+					gridView.classList.remove("hidden");
+					combinedView.classList.add("hidden");
+					// Grid Icon
+					toggleBtn.innerHTML =
+						'<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>';
+				} else {
+					gridView.classList.add("hidden");
+					combinedView.classList.remove("hidden");
+					// Activity/Graph Icon
+					toggleBtn.innerHTML =
+						'<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>';
+				}
+			});
 		</script>
 
 		<style>
@@ -210,8 +605,13 @@
 				--card-bg: #ffffff;
 				--text-primary: #2d3436;
 				--text-secondary: #636e72;
-				--accent-color: #00b894;
-				--shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+				--accent-temp: #00b894;
+				--accent-humidity: #0984e3;
+				--accent-light: #fdcb6e;
+				--accent-air-humidity: #6c5ce7;
+				--shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.02);
+				--shadow-md: 0 10px 30px rgba(0, 0, 0, 0.05);
+				--radius: 24px;
 			}
 
 			* {
@@ -224,44 +624,62 @@
 				font-family: "Outfit", sans-serif;
 				background-color: var(--bg-color);
 				color: var(--text-primary);
+				min-height: 100vh;
+				padding: 40px 20px;
 				display: flex;
 				justify-content: center;
-				align-items: center;
-				min-height: 100vh;
-				padding: 20px;
+				align-items: flex-start; /* Align top */
 			}
 
 			main {
 				width: 100%;
+				max-width: 1000px;
 				display: flex;
-				justify-content: center;
+				flex-direction: column;
+				gap: 40px;
 			}
 
-			.card {
+			/* Header Styles */
+			.plant-header {
+				display: flex;
+				align-items: center;
+				gap: 20px;
 				background: var(--card-bg);
-				border-radius: 24px;
-				box-shadow: var(--shadow);
-				padding: clamp(24px, 5vw, 40px);
+				padding: 20px 30px;
+				border-radius: var(--radius);
+				box-shadow: var(--shadow-md);
 				width: 100%;
-				max-width: 500px;
-				text-align: center;
-				transition: transform 0.3s ease;
+				max-width: 600px;
+				margin: 0 auto;
+				position: relative;
 			}
 
-			.card:hover {
-				transform: translateY(-5px);
-			}
-
-			.image-container {
-				width: clamp(120px, 30vw, 150px);
-				height: clamp(120px, 30vw, 150px);
-				margin: 0 auto 20px;
-				border-radius: 50%;
-				overflow: hidden;
-				background: #eef2f5;
+			.view-toggle {
+				margin-left: auto;
+				background: transparent;
+				border: none;
+				cursor: pointer;
+				color: var(--text-secondary);
+				padding: 8px;
+				border-radius: 8px;
+				transition: all 0.2s ease;
 				display: flex;
 				align-items: center;
 				justify-content: center;
+			}
+
+			.view-toggle:hover {
+				background: rgba(0, 0, 0, 0.05);
+				color: var(--text-primary);
+			}
+
+			.image-container {
+				width: 60px;
+				height: 60px;
+				border-radius: 50%;
+				overflow: hidden;
+				background: #eef2f5;
+				flex-shrink: 0;
 			}
 
 			.image-container img {
@@ -270,75 +688,181 @@
 				object-fit: cover;
 			}
 
-			h1 {
+			.header-info h1 {
+				font-size: 1.5rem;
 				font-weight: 600;
-				font-size: clamp(1.25rem, 4vw, 1.5rem);
-				margin-bottom: 20px;
 				color: var(--text-primary);
-				letter-spacing: -0.5px;
+				line-height: 1.2;
 			}
 
-			.stats {
-				display: flex;
-				justify-content: space-around;
-				align-items: center;
-				background: #f8f9fa;
-				padding: 15px;
-				border-radius: 16px;
-				margin-bottom: 25px;
-				flex-wrap: wrap;
-				gap: 10px;
-			}
-
-			.stat-item {
-				display: flex;
-				flex-direction: column;
-				gap: 5px;
-				min-width: 80px;
-			}
-
-			.label {
-				font-size: 0.75rem;
+			.subtitle {
+				font-size: 0.9rem;
 				color: var(--text-secondary);
-				text-transform: uppercase;
-				letter-spacing: 1px;
 				font-weight: 400;
 			}
 
-			.value {
-				font-size: clamp(1rem, 3vw, 1.25rem);
-				font-weight: 600;
-				color: var(--text-primary);
-			}
-
-			.divider {
-				width: 1px;
-				height: 30px;
-				background-color: #dfe6e9;
-			}
-
-			.chart-container {
-				position: relative;
-				height: 200px;
+			/* Dashboard Grid */
+			.dashboard-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+				gap: 24px;
 				width: 100%;
 			}
 
-			@media (max-width: 360px) {
-				.divider {
-					display: none;
+			/* Metric Card */
+			.metric-card {
+				background: var(--card-bg);
+				border-radius: var(--radius);
+				padding: 24px;
+				box-shadow: var(--shadow-md);
+				display: flex;
+				flex-direction: column;
+				gap: 20px;
+				transition:
+					transform 0.3s ease,
+					box-shadow 0.3s ease;
+				height: 320px; /* Fixed height for consistency */
+			}
+
+			.metric-card:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+			}
+
+			.metric-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+			}
+
+			.metric-info {
+				display: flex;
+				flex-direction: column;
+			}
+
+			.metric-label {
+				font-size: 0.85rem;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				color: var(--text-secondary);
+				font-weight: 500;
+				margin-bottom: 5px;
+			}
+
+			.metric-value {
+				font-size: 2.5rem;
+				font-weight: 600;
+				color: var(--text-primary);
+				line-height: 1;
+			}
+
+			.metric-icon {
+				width: 40px;
+				height: 40px;
+				border-radius: 12px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				opacity: 0.8;
+			}
+
+			.metric-icon svg {
+				width: 20px;
+				height: 20px;
+			}
+
+			.temp-icon {
+				background-color: rgba(0, 184, 148, 0.1);
+				color: var(--accent-temp);
+			}
+			.humidity-icon {
+				background-color: rgba(9, 132, 227, 0.1);
+				color: var(--accent-humidity);
+			}
+			.light-icon {
+				background-color: rgba(253, 203, 110, 0.1);
+				color: var(--accent-light);
+			}
+			.air-humidity-icon {
+				background-color: rgba(108, 92, 231, 0.1);
+				color: var(--accent-air-humidity);
+			}
+
+			.chart-container {
+				flex-grow: 1;
+				width: 100%;
+				position: relative;
+				min-height: 0; /* Important for flex child chart resizing */
+			}
+
+			canvas {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+
+			/* Animations */
+			.fade-in {
+				opacity: 0;
+				animation: fadeIn 0.8s ease-out forwards;
+			}
+
+			.delay-1 {
+				animation-delay: 0.1s;
+			}
+			.delay-2 {
+				animation-delay: 0.2s;
+			}
+			.delay-3 {
+				animation-delay: 0.3s;
+			}
+			.delay-4 {
+				animation-delay: 0.4s;
+			}
+
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			/* Responsive */
+			@media (max-width: 768px) {
+				body {
+					padding: 20px;
 				}
 
-				.stats {
+				.plant-header {
 					flex-direction: column;
-					gap: 15px;
+					text-align: center;
+					gap: 10px;
 				}
 
-				.stat-item {
-					width: 100%;
-					flex-direction: row;
-					justify-content: space-between;
-					padding: 0 10px;
+				.metric-card {
+					height: 280px;
 				}
+
+				.metric-value {
+					font-size: 2rem;
+				}
+			}
+			/* Combined View */
+			.combined-view {
+				width: 100%;
+			}
+
+			.full-width {
+				height: 500px;
+				width: 100%;
+			}
+
+			:global(.hidden) {
+				display: none !important;
 			}
 		</style>
 	</body>
