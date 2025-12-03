@@ -1,16 +1,6 @@
 # 🌿 Plant Monitoring Dashboard
 
-Un dashboard en tiempo real para monitorizar las condiciones ambientales de tus plantas. Este proyecto visualiza datos de temperatura y humedad, ayudándote a mantener tus plantas felices y saludables.
-
-![Plant Monitoring Dashboard](/plant.png)
-
-## ✨ Características
-
-- **Monitorización en Tiempo Real**: Visualización instantánea de la temperatura y humedad actuales.
-- **Gráficos Históricos**: Gráfico interactivo (Chart.js) que muestra la evolución de las lecturas a lo largo del tiempo.
-- **Actualización Automática**: Los datos se refrescan automáticamente cada 15 segundos sin necesidad de recargar la página.
-- **Diseño Responsivo**: Interfaz limpia y moderna adaptada a dispositivos móviles y de escritorio.
-- **Indicadores Visuales**: Diseño intuitivo con tarjetas y estadísticas claras.
+Un dashboard en tiempo real
 
 ## 🛠️ Tecnologías
 
